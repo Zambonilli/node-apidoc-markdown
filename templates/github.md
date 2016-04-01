@@ -18,10 +18,11 @@
 # <%= group %>
 
 <% Object.keys(data[group]).forEach(function (sub) { -%>
-## <%= data[group][sub][0].title %>
-[Back to top](#top)
+## <%= data[group][sub][0].title %> [:arrow_up:](#top)
 
-<%-: data[group][sub][0].description | undef %>
+![<%=: data[group][sub][0].type | upcase %>](<%=: data[group][sub][0].type | badge %>)
+
+> <%-: data[group][sub][0].description | undef %>
 
 ```
 <%-: data[group][sub][0].type | upcase %> <%= data[group][sub][0].url %>
@@ -109,5 +110,6 @@ _Allowed values: <%- param.allowedValues %>_<% } %>|
 <% }); //foreach error example -%>
 <% } //if examples -%>
 <% }); //foreach sub  -%>
+---
 <% }); //foreach group -%>
 
