@@ -44,7 +44,7 @@ ejs.filters.badge = function (t) {
 			img += 'blue';
 			break;
 		case 'PATCH':
-			img += '#00aeef';
+			img += '00aeef';
 			break;
 		case 'DELETE':
 			img += 'red';
