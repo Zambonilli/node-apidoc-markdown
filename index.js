@@ -26,10 +26,39 @@ ejs.filters.undef = function (obj) {
 };
 
 ejs.filters.mlink = function (obj) {
-	return (obj || '').toLowerCase().replace(/\s/g, '-');
+	return (obj || '').toLowerCase().replace(/\s/g, '-').replace(/\;|\/|\?|:|@|&|=|\+|\$|\,/g, '');
 };
 
-var tmplFile = argv.template ? argv.template : __dirname + '/templates/default.md',
+ejs.filters.badge = function (t) {
+	var type = t ? t.toUpperCase() : 'GET';
+	var img = 'https://img.shields.io/badge/method-' + type + '-';
+
+	switch (type) {
+		case 'GET':
+			img += 'brightgreen';
+			break;
+		case 'POST':
+			img += 'orange';
+			break;
+		case 'PUT':
+			img += 'blue';
+			break;
+		case 'PATCH':
+			img += '00aeef';
+			break;
+		case 'DELETE':
+			img += 'red';
+			break;
+		default:
+			break;
+	}
+
+	img += '.svg';
+
+	return img;
+};
+
+var tmplFile = argv.template ? argv.template : __dirname + '/templates/github.md',
 	apiData = JSON.parse(fs.readFileSync(argv.path + '/api_data.json')),
 	projData = JSON.parse(fs.readFileSync(argv.path + '/api_project.json')),
 	template = ejs.compile(fs.readFileSync(tmplFile).toString());

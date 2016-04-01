@@ -3,9 +3,9 @@
 
 <%= project.description %>
 
-<% Object.keys(data).forEach(function (group) { -%>
+<% Object.keys(data).sort().forEach(function (group) { -%>
 - [<%= group %>](#<%=: group | mlink %>)
-	<% Object.keys(data[group]).forEach(function (sub) { -%>
+	<% Object.keys(data[group]).sort(function(a, b) { return data[group][a][0].title.localeCompare(data[group][b][0].title) }).forEach(function (sub) { -%>
 - [<%= data[group][sub][0].title %>](#<%=: data[group][sub][0].title | mlink %>)
 	<% }); -%>
 
@@ -14,14 +14,15 @@
 <% if (prepend) { -%>
 <%- prepend %>
 <% } -%>
-<% Object.keys(data).forEach(function (group) { -%>
+<% Object.keys(data).sort().forEach(function (group) { -%>
 # <%= group %>
 
-<% Object.keys(data[group]).forEach(function (sub) { -%>
+<% Object.keys(data[group]).sort(function(a, b) { return data[group][a][0].title.localeCompare(data[group][b][0].title) }).forEach(function (sub) { -%>
 ## <%= data[group][sub][0].title %>
-[Back to top](#top)
 
-<%-: data[group][sub][0].description | undef %>
+![<%=: data[group][sub][0].type | upcase %>](<%=: data[group][sub][0].type | badge %>)
+
+> <%-: data[group][sub][0].description | undef %>
 
 ```
 <%-: data[group][sub][0].type | upcase %> <%= data[group][sub][0].url %>
@@ -108,6 +109,8 @@ _Allowed values: <%- param.allowedValues %>_<% } %>|
 ```
 <% }); //foreach error example -%>
 <% } //if examples -%>
+[:arrow_up:](#top)
+---
 <% }); //foreach sub  -%>
 <% }); //foreach group -%>
 
