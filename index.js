@@ -50,6 +50,7 @@ ejs.filters.badge = function (t) {
 			img += 'red';
 			break;
 		default:
+			img += 'blue';
 			break;
 	}
 
